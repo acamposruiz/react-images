@@ -137,6 +137,7 @@ export default class PaginatedThumbnails extends Component {
 			thumbnails = images.slice(baseOffset, baseOffset + totalCount);
 		}
 
+
 		return (
 			<div className={css(classes.paginatedThumbnails)}>
 				{this.renderArrowPrev()}

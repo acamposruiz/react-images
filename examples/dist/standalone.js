@@ -2941,25 +2941,27 @@ var Lightbox = (function (_Component) {
 			if (!_utils.canUseDom) return;
 
 			// preload images
-			if (nextProps.preloadNextImage) {
-				var currentIndex = this.props.currentImage;
-				var nextIndex = nextProps.currentImage + 1;
-				var prevIndex = nextProps.currentImage - 1;
-				var preloadIndex = undefined;
+			if (nextProps.items.type == 'images') {
+				if (nextProps.preloadNextImage) {
+					var currentIndex = this.props.currentItem;
+					var nextIndex = nextProps.currentItem + 1;
+					var prevIndex = nextProps.currentItem - 1;
+					var preloadIndex = undefined;
 
-				if (currentIndex && nextProps.currentImage > currentIndex) {
-					preloadIndex = nextIndex;
-				} else if (currentIndex && nextProps.currentImage < currentIndex) {
-					preloadIndex = prevIndex;
-				}
+					if (currentIndex && nextProps.currentItem > currentIndex) {
+						preloadIndex = nextIndex;
+					} else if (currentIndex && nextProps.currentItem < currentIndex) {
+						preloadIndex = prevIndex;
+					}
 
-				// if we know the user's direction just get one image
-				// otherwise, to be safe, we need to grab one in each direction
-				if (preloadIndex) {
-					this.preloadImage(preloadIndex);
-				} else {
-					this.preloadImage(prevIndex);
-					this.preloadImage(nextIndex);
+					// if we know the user's direction just get one image
+					// otherwise, to be safe, we need to grab one in each direction
+					if (preloadIndex) {
+						this.preloadImage(preloadIndex);
+					} else {
+						this.preloadImage(prevIndex);
+						this.preloadImage(nextIndex);
+					}
 				}
 			}
 
@@ -2986,7 +2988,7 @@ var Lightbox = (function (_Component) {
 	}, {
 		key: 'preloadImage',
 		value: function preloadImage(idx) {
-			var image = this.props.images[idx];
+			var image = this.props.items.items[idx];
 
 			if (!image) return;
 
@@ -3001,7 +3003,7 @@ var Lightbox = (function (_Component) {
 	}, {
 		key: 'gotoNext',
 		value: function gotoNext(event) {
-			if (this.props.currentImage === this.props.images.length - 1) return;
+			if (this.props.currentItem === this.props.items.items.length - 1) return;
 			if (event) {
 				event.preventDefault();
 				event.stopPropagation();
@@ -3011,7 +3013,7 @@ var Lightbox = (function (_Component) {
 	}, {
 		key: 'gotoPrev',
 		value: function gotoPrev(event) {
-			if (this.props.currentImage === 0) return;
+			if (this.props.currentItem === 0) return;
 			if (event) {
 				event.preventDefault();
 				event.stopPropagation();
@@ -3051,7 +3053,7 @@ var Lightbox = (function (_Component) {
 	}, {
 		key: 'renderArrowPrev',
 		value: function renderArrowPrev() {
-			if (this.props.currentImage === 0) return null;
+			if (this.props.currentItem === 0) return null;
 
 			return _react2['default'].createElement(_componentsArrow2['default'], {
 				direction: 'left',
@@ -3064,7 +3066,7 @@ var Lightbox = (function (_Component) {
 	}, {
 		key: 'renderArrowNext',
 		value: function renderArrowNext() {
-			if (this.props.currentImage === this.props.images.length - 1) return null;
+			if (this.props.currentItem === this.props.items.items.length - 1) return null;
 
 			return _react2['default'].createElement(_componentsArrow2['default'], {
 				direction: 'right',
@@ -3109,7 +3111,7 @@ var Lightbox = (function (_Component) {
 						showCloseButton: showCloseButton,
 						closeButtonTitle: this.props.closeButtonTitle
 					}),
-					this.renderImages()
+					this.renderItems()
 				),
 				this.renderThumbnails(),
 				this.renderArrowPrev(),
@@ -3118,61 +3120,65 @@ var Lightbox = (function (_Component) {
 			);
 		}
 	}, {
-		key: 'renderImages',
-		value: function renderImages() {
+		key: 'renderItems',
+		value: function renderItems() {
 			var _props2 = this.props;
-			var currentImage = _props2.currentImage;
-			var images = _props2.images;
+			var currentItem = _props2.currentItem;
+			var items = _props2.items;
 			var imageCountSeparator = _props2.imageCountSeparator;
 			var onClickImage = _props2.onClickImage;
 			var showImageCount = _props2.showImageCount;
 			var showThumbnails = _props2.showThumbnails;
 
-			if (!images || !images.length) return null;
+			if (!items.items || !items.items.length) return null;
 
-			var image = images[currentImage];
+			var item = items.items[currentItem];
 
-			var srcset = undefined;
-			var sizes = undefined;
+			if (items.type == 'images') {
+				var images = items.items;
+				var image = item;
+				var srcset = undefined;
+				var sizes = undefined;
 
-			if (image.srcset) {
-				srcset = image.srcset.join();
-				sizes = '100vw';
+				if (image.srcset) {
+					srcset = image.srcset.join();
+					sizes = '100vw';
+				}
+
+				var thumbnailsSize = showThumbnails ? this.theme.thumbnail.size : 0;
+				var heightOffset = this.theme.header.height + this.theme.footer.height + thumbnailsSize + this.theme.container.gutter.vertical + 'px';
+
+				return _react2['default'].createElement(
+					'figure',
+					{ className: (0, _aphroditeNoImportant.css)(classes.figure) },
+					_react2['default'].createElement('img', {
+						className: (0, _aphroditeNoImportant.css)(classes.image),
+						onClick: !!onClickImage && onClickImage,
+						sizes: sizes,
+						alt: image.alt,
+						src: image.src,
+						srcSet: srcset,
+						style: {
+							cursor: this.props.onClickImage ? 'pointer' : 'auto',
+							maxHeight: 'calc(100vh - ' + heightOffset + ')'
+						}
+					}),
+					_react2['default'].createElement(_componentsFooter2['default'], {
+						caption: image.caption,
+						countCurrent: currentItem + 1,
+						countSeparator: imageCountSeparator,
+						countTotal: images.length,
+						showCount: showImageCount
+					})
+				);
 			}
-
-			var thumbnailsSize = showThumbnails ? this.theme.thumbnail.size : 0;
-			var heightOffset = this.theme.header.height + this.theme.footer.height + thumbnailsSize + this.theme.container.gutter.vertical + 'px';
-
-			return _react2['default'].createElement(
-				'figure',
-				{ className: (0, _aphroditeNoImportant.css)(classes.figure) },
-				_react2['default'].createElement('img', {
-					className: (0, _aphroditeNoImportant.css)(classes.image),
-					onClick: !!onClickImage && onClickImage,
-					sizes: sizes,
-					alt: image.alt,
-					src: image.src,
-					srcSet: srcset,
-					style: {
-						cursor: this.props.onClickImage ? 'pointer' : 'auto',
-						maxHeight: 'calc(100vh - ' + heightOffset + ')'
-					}
-				}),
-				_react2['default'].createElement(_componentsFooter2['default'], {
-					caption: images[currentImage].caption,
-					countCurrent: currentImage + 1,
-					countSeparator: imageCountSeparator,
-					countTotal: images.length,
-					showCount: showImageCount
-				})
-			);
 		}
 	}, {
 		key: 'renderThumbnails',
 		value: function renderThumbnails() {
 			var _props3 = this.props;
-			var images = _props3.images;
-			var currentImage = _props3.currentImage;
+			var items = _props3.items;
+			var currentItem = _props3.currentItem;
 			var onClickThumbnail = _props3.onClickThumbnail;
 			var showThumbnails = _props3.showThumbnails;
 			var thumbnailOffset = _props3.thumbnailOffset;
@@ -3180,8 +3186,8 @@ var Lightbox = (function (_Component) {
 			if (!showThumbnails) return;
 
 			return _react2['default'].createElement(_componentsPaginatedThumbnails2['default'], {
-				currentImage: currentImage,
-				images: images,
+				currentImage: currentItem,
+				images: items.items,
 				offset: thumbnailOffset,
 				onClickThumbnail: onClickThumbnail
 			});
@@ -3203,16 +3209,14 @@ var Lightbox = (function (_Component) {
 Lightbox.propTypes = {
 	backdropClosesModal: _propTypes2['default'].bool,
 	closeButtonTitle: _propTypes2['default'].string,
-	currentImage: _propTypes2['default'].number,
+	currentItem: _propTypes2['default'].number,
 	customControls: _propTypes2['default'].arrayOf(_propTypes2['default'].node),
 	enableKeyboardInput: _propTypes2['default'].bool,
 	imageCountSeparator: _propTypes2['default'].string,
-	images: _propTypes2['default'].arrayOf(_propTypes2['default'].shape({
-		src: _propTypes2['default'].string.isRequired,
-		srcset: _propTypes2['default'].array,
-		caption: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].element]),
-		thumbnail: _propTypes2['default'].string
-	})).isRequired,
+	items: _propTypes2['default'].shape({
+		type: _propTypes2['default'].oneOf(['images', 'articles', 'videos']).isRequired,
+		items: _propTypes2['default'].array
+	}).isRequired,
 	isOpen: _propTypes2['default'].bool,
 	leftArrowTitle: _propTypes2['default'].string,
 	onClickImage: _propTypes2['default'].func,
@@ -3230,7 +3234,7 @@ Lightbox.propTypes = {
 };
 Lightbox.defaultProps = {
 	closeButtonTitle: 'Close (Esc)',
-	currentImage: 0,
+	currentItem: 0,
 	enableKeyboardInput: true,
 	imageCountSeparator: ' of ',
 	leftArrowTitle: 'Previous (Left arrow key)',

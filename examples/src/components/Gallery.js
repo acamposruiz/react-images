@@ -83,8 +83,8 @@ class Gallery extends Component {
 				{this.props.subheading && <p>{this.props.subheading}</p>}
 				{this.renderGallery()}
 				<Lightbox
-					currentImage={this.state.currentImage}
-					images={this.props.images}
+					currentItem={this.state.currentImage}
+					items={{type:'images',items:this.props.images}}
 					isOpen={this.state.lightboxIsOpen}
 					onClickImage={this.handleClickImage}
 					onClickNext={this.gotoNext}

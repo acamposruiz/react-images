@@ -38,27 +38,30 @@ class Lightbox extends Component {
 		if (!canUseDom) return;
 
 		// preload images
-		if (nextProps.preloadNextImage) {
-			const currentIndex = this.props.currentImage;
-			const nextIndex = nextProps.currentImage + 1;
-			const prevIndex = nextProps.currentImage - 1;
-			let preloadIndex;
+		if (nextProps.items.type == 'images') {
+            if (nextProps.preloadNextImage) {
+                const currentIndex = this.props.currentItem;
+                const nextIndex = nextProps.currentItem + 1;
+                const prevIndex = nextProps.currentItem - 1;
+                let preloadIndex;
 
-			if (currentIndex && nextProps.currentImage > currentIndex) {
-				preloadIndex = nextIndex;
-			} else if (currentIndex && nextProps.currentImage < currentIndex) {
-				preloadIndex = prevIndex;
-			}
+                if (currentIndex && nextProps.currentItem > currentIndex) {
+                    preloadIndex = nextIndex;
+                } else if (currentIndex && nextProps.currentItem < currentIndex) {
+                    preloadIndex = prevIndex;
+                }
 
-			// if we know the user's direction just get one image
-			// otherwise, to be safe, we need to grab one in each direction
-			if (preloadIndex) {
-				this.preloadImage(preloadIndex);
-			} else {
-				this.preloadImage(prevIndex);
-				this.preloadImage(nextIndex);
-			}
+                // if we know the user's direction just get one image
+                // otherwise, to be safe, we need to grab one in each direction
+                if (preloadIndex) {
+                    this.preloadImage(preloadIndex);
+                } else {
+                    this.preloadImage(prevIndex);
+                    this.preloadImage(nextIndex);
+                }
+            }
 		}
+
 
 		// add/remove event listeners
 		if (!this.props.isOpen && nextProps.isOpen && nextProps.enableKeyboardInput) {
@@ -79,7 +82,7 @@ class Lightbox extends Component {
 	// ==============================
 
 	preloadImage (idx) {
-		const image = this.props.images[idx];
+		const image = this.props.items.items[idx];
 
 		if (!image) return;
 
@@ -92,7 +95,7 @@ class Lightbox extends Component {
 		}
 	}
 	gotoNext (event) {
-		if (this.props.currentImage === (this.props.images.length - 1)) return;
+		if (this.props.currentItem === (this.props.items.items.length - 1)) return;
 		if (event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -101,7 +104,7 @@ class Lightbox extends Component {
 
 	}
 	gotoPrev (event) {
-		if (this.props.currentImage === 0) return;
+		if (this.props.currentItem === 0) return;
 		if (event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -134,7 +137,7 @@ class Lightbox extends Component {
 	// ==============================
 
 	renderArrowPrev () {
-		if (this.props.currentImage === 0) return null;
+		if (this.props.currentItem === 0) return null;
 
 		return (
 			<Arrow
@@ -147,7 +150,7 @@ class Lightbox extends Component {
 		);
 	}
 	renderArrowNext () {
-		if (this.props.currentImage === (this.props.images.length - 1)) return null;
+		if (this.props.currentItem === (this.props.items.items.length - 1)) return null;
 
 		return (
 			<Arrow
@@ -190,7 +193,7 @@ class Lightbox extends Component {
 						showCloseButton={showCloseButton}
 						closeButtonTitle={this.props.closeButtonTitle}
 					/>
-					{this.renderImages()}
+					{this.renderItems()}
 				</div>
 				{this.renderThumbnails()}
 				{this.renderArrowPrev()}
@@ -199,70 +202,77 @@ class Lightbox extends Component {
 			</Container>
 		);
 	}
-	renderImages () {
+	renderItems () {
 		const {
-			currentImage,
-			images,
+			currentItem,
+			items,
 			imageCountSeparator,
 			onClickImage,
 			showImageCount,
 			showThumbnails,
 		} = this.props;
 
-		if (!images || !images.length) return null;
+		if (!items.items || !items.items.length) return null;
 
-		const image = images[currentImage];
+		const item = items.items[currentItem];
 
-		let srcset;
-		let sizes;
+		if (items.type == 'images') {
+			const images = items.items;
+			const image = item;
+            let srcset;
+            let sizes;
 
-		if (image.srcset) {
-			srcset = image.srcset.join();
-			sizes = '100vw';
+            if (image.srcset) {
+                srcset = image.srcset.join();
+                sizes = '100vw';
+            }
+
+            const thumbnailsSize = showThumbnails ? this.theme.thumbnail.size : 0;
+            const heightOffset = `${this.theme.header.height + this.theme.footer.height + thumbnailsSize
+            + (this.theme.container.gutter.vertical)}px`;
+
+            return (
+				<figure className={css(classes.figure)}>
+                    {/*
+					 Re-implement when react warning "unknown props"
+					 https://fb.me/react-unknown-prop is resolved
+					 <Swipeable onSwipedLeft={this.gotoNext} onSwipedRight={this.gotoPrev} />
+					 */}
+					<img
+						className={css(classes.image)}
+						onClick={!!onClickImage && onClickImage}
+						sizes={sizes}
+						alt={image.alt}
+						src={image.src}
+						srcSet={srcset}
+						style={{
+                            cursor: this.props.onClickImage ? 'pointer' : 'auto',
+                            maxHeight: `calc(100vh - ${heightOffset})`,
+                        }}
+					/>
+					<Footer
+						caption={image.caption}
+						countCurrent={currentItem + 1}
+						countSeparator={imageCountSeparator}
+						countTotal={images.length}
+						showCount={showImageCount}
+					/>
+				</figure>
+            );
 		}
 
-		const thumbnailsSize = showThumbnails ? this.theme.thumbnail.size : 0;
-		const heightOffset = `${this.theme.header.height + this.theme.footer.height + thumbnailsSize
-			+ (this.theme.container.gutter.vertical)}px`;
 
-		return (
-			<figure className={css(classes.figure)}>
-				{/*
-					Re-implement when react warning "unknown props"
-					https://fb.me/react-unknown-prop is resolved
-					<Swipeable onSwipedLeft={this.gotoNext} onSwipedRight={this.gotoPrev} />
-				*/}
-				<img
-					className={css(classes.image)}
-					onClick={!!onClickImage && onClickImage}
-					sizes={sizes}
-					alt={image.alt}
-					src={image.src}
-					srcSet={srcset}
-					style={{
-						cursor: this.props.onClickImage ? 'pointer' : 'auto',
-						maxHeight: `calc(100vh - ${heightOffset})`,
-					}}
-				/>
-				<Footer
-					caption={images[currentImage].caption}
-					countCurrent={currentImage + 1}
-					countSeparator={imageCountSeparator}
-					countTotal={images.length}
-					showCount={showImageCount}
-				/>
-			</figure>
-		);
 	}
 	renderThumbnails () {
-		const { images, currentImage, onClickThumbnail, showThumbnails, thumbnailOffset } = this.props;
+
+		const { items, currentItem, onClickThumbnail, showThumbnails, thumbnailOffset } = this.props;
 
 		if (!showThumbnails) return;
 
 		return (
 			<PaginatedThumbnails
-				currentImage={currentImage}
-				images={images}
+				currentImage={currentItem}
+				images={items.items}
 				offset={thumbnailOffset}
 				onClickThumbnail={onClickThumbnail}
 			/>
@@ -280,18 +290,14 @@ class Lightbox extends Component {
 Lightbox.propTypes = {
 	backdropClosesModal: PropTypes.bool,
 	closeButtonTitle: PropTypes.string,
-	currentImage: PropTypes.number,
+	currentItem: PropTypes.number,
 	customControls: PropTypes.arrayOf(PropTypes.node),
 	enableKeyboardInput: PropTypes.bool,
 	imageCountSeparator: PropTypes.string,
-	images: PropTypes.arrayOf(
-		PropTypes.shape({
-			src: PropTypes.string.isRequired,
-			srcset: PropTypes.array,
-			caption: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-			thumbnail: PropTypes.string,
-		})
-	).isRequired,
+	items: PropTypes.shape({
+        type: PropTypes.oneOf(['images', 'articles', 'videos']).isRequired,
+        items: PropTypes.array
+    }).isRequired,
 	isOpen: PropTypes.bool,
 	leftArrowTitle: PropTypes.string,
 	onClickImage: PropTypes.func,
@@ -309,7 +315,7 @@ Lightbox.propTypes = {
 };
 Lightbox.defaultProps = {
 	closeButtonTitle: 'Close (Esc)',
-	currentImage: 0,
+	currentItem: 0,
 	enableKeyboardInput: true,
 	imageCountSeparator: ' of ',
 	leftArrowTitle: 'Previous (Left arrow key)',
