@@ -150,6 +150,21 @@ render(
 			orientation,
 			useForDemo,
 		}))} theme={theme} showThumbnails />
+
+		<h3>Themed Texts</h3>
+		<Gallery images={THEMED_IMAGES.map(({ caption, id, orientation, useForDemo }) => ({
+			src: makeUnsplashSrc(id),
+			thumbnail: makeUnsplashThumbnail(id, orientation),
+			srcset: [
+				makeUnsplashSrcSet(id, 1024),
+				makeUnsplashSrcSet(id, 800),
+				makeUnsplashSrcSet(id, 500),
+				makeUnsplashSrcSet(id, 320),
+			],
+			caption,
+			orientation,
+			useForDemo,
+		}))} theme={theme} showThumbnails />
 	</div>,
 	document.getElementById('example')
 );

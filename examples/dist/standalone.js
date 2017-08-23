@@ -3132,11 +3132,9 @@ var Lightbox = (function (_Component) {
 
 			if (!items.items || !items.items.length) return null;
 
-			var item = items.items[currentItem];
-
 			if (items.type == 'images') {
 				var images = items.items;
-				var image = item;
+				var image = images[currentItem];
 				var srcset = undefined;
 				var sizes = undefined;
 
@@ -3170,6 +3168,21 @@ var Lightbox = (function (_Component) {
 						countTotal: images.length,
 						showCount: showImageCount
 					})
+				);
+			} else if (items.type == 'texts') {
+				var texts = items.items;
+				var text = texts[currentItem];
+
+				return _react2['default'].createElement(
+					'article',
+					{ className: (0, _aphroditeNoImportant.css)(classes.figure) },
+					_react2['default'].createElement(
+						'p',
+						null,
+						' ',
+						text,
+						' '
+					)
 				);
 			}
 		}
@@ -3214,7 +3227,7 @@ Lightbox.propTypes = {
 	enableKeyboardInput: _propTypes2['default'].bool,
 	imageCountSeparator: _propTypes2['default'].string,
 	items: _propTypes2['default'].shape({
-		type: _propTypes2['default'].oneOf(['images', 'articles', 'videos']).isRequired,
+		type: _propTypes2['default'].oneOf(['images', 'texts', 'videos']).isRequired,
 		items: _propTypes2['default'].array
 	}).isRequired,
 	isOpen: _propTypes2['default'].bool,

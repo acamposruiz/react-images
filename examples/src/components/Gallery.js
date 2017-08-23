@@ -4,77 +4,112 @@ import { css, StyleSheet } from 'aphrodite/no-important';
 import Lightbox from 'react-images';
 
 class Gallery extends Component {
-	constructor () {
-		super();
+	constructor (props) {
+		super(props);
+
+		let itemType;
+
+		if (this.props.images) {
+            itemType = 'images'
+		} else if (this.props.texts) {
+            itemType = 'texts'
+		} else {
+            itemType = 'videos'
+		}
 
 		this.state = {
 			lightboxIsOpen: false,
-			currentImage: 0,
+			currentItem: 0,
+            itemType: itemType,
 		};
 
 		this.closeLightbox = this.closeLightbox.bind(this);
 		this.gotoNext = this.gotoNext.bind(this);
 		this.gotoPrevious = this.gotoPrevious.bind(this);
-		this.gotoImage = this.gotoImage.bind(this);
-		this.handleClickImage = this.handleClickImage.bind(this);
+		this.gotoItem = this.gotoItem.bind(this);
+		this.handleClickItem = this.handleClickItem.bind(this);
 		this.openLightbox = this.openLightbox.bind(this);
 	}
 	openLightbox (index, event) {
 		event.preventDefault();
 		this.setState({
-			currentImage: index,
+			currentItem: index,
 			lightboxIsOpen: true,
 		});
 	}
 	closeLightbox () {
 		this.setState({
-			currentImage: 0,
+			currentItem: 0,
 			lightboxIsOpen: false,
 		});
 	}
 	gotoPrevious () {
 		this.setState({
-			currentImage: this.state.currentImage - 1,
+			currentItem: this.state.currentItem - 1,
 		});
 	}
 	gotoNext () {
 		this.setState({
-			currentImage: this.state.currentImage + 1,
+			currentItem: this.state.currentItem + 1,
 		});
 	}
-	gotoImage (index) {
+	gotoItem (index) {
 		this.setState({
-			currentImage: index,
+			currentItem: index,
 		});
 	}
-	handleClickImage () {
-		if (this.state.currentImage === this.props.images.length - 1) return;
+	handleClickItem () {
+		if (this.state.currentItem === this.props[this.state.itemType].length - 1) return;
 
 		this.gotoNext();
 	}
 	renderGallery () {
-		const { images } = this.props;
+		if (this.state.itemType == 'images') {
+            const { images } = this.props;
 
-		if (!images) return;
+            if (!images) return;
 
-		const gallery = images.filter(i => i.useForDemo).map((obj, i) => {
-			return (
-				<a
-					href={obj.src}
-					className={css(classes.thumbnail, classes[obj.orientation])}
-					key={i}
-					onClick={(e) => this.openLightbox(i, e)}
-				>
-					<img src={obj.thumbnail} className={css(classes.source)} />
-				</a>
-			);
-		});
+            const gallery = images.filter(i => i.useForDemo).map((obj, i) => {
+                return (
+					<a
+						href={obj.src}
+						className={css(classes.thumbnail, classes[obj.orientation])}
+						key={i}
+						onClick={(e) => this.openLightbox(i, e)}
+					>
+						<img src={obj.thumbnail} className={css(classes.source)} />
+					</a>
+                );
+            });
 
-		return (
-			<div className={css(classes.gallery)}>
-				{gallery}
-			</div>
-		);
+            return (
+				<div className={css(classes.gallery)}>
+                    {gallery}
+				</div>
+            );
+		} else if (this.state.itemType == 'texts') {
+            const { texts } = this.props;
+
+            if (!texts) return;
+
+            const gallery = texts.map((text, i) => {
+                return (
+					<a
+						className='text-thumbail'
+						key={i}
+						onClick={(e) => this.openLightbox(i, e)}
+					>
+						{text}
+					</a>
+                );
+            });
+
+            return (
+				<div className={css(classes.gallery)}>
+                    {gallery}
+				</div>
+            );
+		}
 	}
 	render () {
 		return (
@@ -83,13 +118,13 @@ class Gallery extends Component {
 				{this.props.subheading && <p>{this.props.subheading}</p>}
 				{this.renderGallery()}
 				<Lightbox
-					currentItem={this.state.currentImage}
-					items={{type:'images',items:this.props.images}}
+					currentItem={this.state.currentItem}
+					items={{type:this.state.itemType,items:this.props[this.state.itemType]}}
 					isOpen={this.state.lightboxIsOpen}
-					onClickImage={this.handleClickImage}
+					onClickImage={this.handleClickItem}
 					onClickNext={this.gotoNext}
 					onClickPrev={this.gotoPrevious}
-					onClickThumbnail={this.gotoImage}
+					onClickThumbnail={this.gotoItem}
 					onClose={this.closeLightbox}
 					showThumbnails={this.props.showThumbnails}
 					theme={this.props.theme}
@@ -103,6 +138,7 @@ Gallery.displayName = 'Gallery';
 Gallery.propTypes = {
 	heading: PropTypes.string,
 	images: PropTypes.array,
+	texts: PropTypes.array,
 	showThumbnails: PropTypes.bool,
 	subheading: PropTypes.string,
 };

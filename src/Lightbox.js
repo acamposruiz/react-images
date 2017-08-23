@@ -214,11 +214,9 @@ class Lightbox extends Component {
 
 		if (!items.items || !items.items.length) return null;
 
-		const item = items.items[currentItem];
-
 		if (items.type == 'images') {
 			const images = items.items;
-			const image = item;
+			const image = images[currentItem];
             let srcset;
             let sizes;
 
@@ -259,6 +257,16 @@ class Lightbox extends Component {
 					/>
 				</figure>
             );
+		} else if (items.type == 'texts') {
+            const texts = items.items;
+            const text = texts[currentItem];
+
+            return (
+				<article className={css(classes.figure)}>
+					<p> {text} </p>
+				</article>
+            );
+
 		}
 
 
@@ -295,7 +303,7 @@ Lightbox.propTypes = {
 	enableKeyboardInput: PropTypes.bool,
 	imageCountSeparator: PropTypes.string,
 	items: PropTypes.shape({
-        type: PropTypes.oneOf(['images', 'articles', 'videos']).isRequired,
+        type: PropTypes.oneOf(['images', 'texts', 'videos']).isRequired,
         items: PropTypes.array
     }).isRequired,
 	isOpen: PropTypes.bool,
