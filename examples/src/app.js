@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import Gallery from './components/Gallery';
+import loremIpsum from 'lorem-ipsum';
 
 function makeUnsplashSrc (id) {
 	return `https://images.unsplash.com/photo-${id}?dpr=2&auto=format&w=1024&h=1024`;
@@ -152,19 +153,9 @@ render(
 		}))} theme={theme} showThumbnails />
 
 		<h3>Themed Texts</h3>
-		<Gallery images={THEMED_IMAGES.map(({ caption, id, orientation, useForDemo }) => ({
-			src: makeUnsplashSrc(id),
-			thumbnail: makeUnsplashThumbnail(id, orientation),
-			srcset: [
-				makeUnsplashSrcSet(id, 1024),
-				makeUnsplashSrcSet(id, 800),
-				makeUnsplashSrcSet(id, 500),
-				makeUnsplashSrcSet(id, 320),
-			],
-			caption,
-			orientation,
-			useForDemo,
-		}))} theme={theme} showThumbnails />
+		<Gallery texts={Array(1,1,1,1,1,1,1).map(item => {
+            return loremIpsum({count: 10, units: 'sentences'});
+        })} theme={theme} showThumbnails />
 	</div>,
 	document.getElementById('example')
 );
