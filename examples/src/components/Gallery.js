@@ -94,13 +94,13 @@ class Gallery extends Component {
 
             const gallery = texts.map((text, i) => {
                 return (
-					<a
-						className='text-thumbail'
+					<p
+						className={css(classes.text_thumbail)}
 						key={i}
 						onClick={(e) => this.openLightbox(i, e)}
 					>
-						{text}
-					</a>
+                        {text}
+					</p>
                 );
             });
 
@@ -170,6 +170,27 @@ const classes = StyleSheet.create({
 		'@media (min-width: 500px)': {
 			paddingRight: gutter.large,
 			paddingBottom: gutter.large,
+		},
+	},
+
+	// anchor
+    text_thumbail: {
+        cursor: 'pointer',
+		height: '200px',
+		'text-align': 'justify',
+		'font-size': '16px',
+		width: '46%',
+		padding: '10px',
+		margin: '10px',
+		boxSizing: 'border-box',
+		display: 'block',
+		float: 'left',
+		overflow: 'scroll',
+		border: 'solid 1px #E6E6E8',
+        'border-radius': '4px',
+        color: 'darkgray',
+
+		'@media (min-width: 500px)': {
 		},
 	},
 

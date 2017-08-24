@@ -153,9 +153,9 @@ render(
 		}))} theme={theme} showThumbnails />
 
 		<h3>Themed Texts</h3>
-		<Gallery texts={Array(1,1,1,1,1,1,1).map(item => {
+		<Gallery texts={Array(1,1,1,1).map(item => {
             return loremIpsum({count: 10, units: 'sentences'});
-        })} theme={theme} showThumbnails />
+        })} theme={theme} />
 	</div>,
 	document.getElementById('example')
 );
