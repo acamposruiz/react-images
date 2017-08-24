@@ -3929,7 +3929,7 @@ module.exports = {
 	deepMerge: _deepMerge2['default']
 };
 
-},{"./bindFunctions":55,"./canUseDom":56,"./deepMerge":57}],"react-images":[function(require,module,exports){
+},{"./bindFunctions":55,"./canUseDom":56,"./deepMerge":57}],"react-images-texts-videos":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {

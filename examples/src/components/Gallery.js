@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { css, StyleSheet } from 'aphrodite/no-important';
-import Lightbox from 'react-images';
+import Lightbox from 'react-images-texts-videos';
 
 class Gallery extends Component {
 	constructor (props) {
