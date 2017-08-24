@@ -1,20 +1,20 @@
-# React Images
+# React Images, Texts and Videos
 
-[![Join the chat at https://gitter.im/react-images/Lobby](https://badges.gitter.im/react-images/Lobby.svg)](https://gitter.im/react-images/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-A simple, responsive lightbox component for displaying an array of images.
+A simple, responsive lightbox component for displaying an array of images, texts and videos.
 
 
 ### Quick start
 
 
 ```bash
-npm install --save react-images
+npm install --save react-images-texts-videos
 ```
+
+with images:
 
 ```jsx
 import React from 'react';
-import Lightbox from 'react-images';
+import Lightbox from 'react-images-texts-videos';
 
 export default class Sample extends React.Component {
   ...
@@ -32,10 +32,31 @@ export default class Sample extends React.Component {
 }
 ```
 
+or wit texts:
+
+```jsx
+import React from 'react';
+import Lightbox from 'react-images-texts-videos';
+
+export default class Sample extends React.Component {
+  ...
+  render() {
+    return (
+      <Lightbox
+        texts={['text1...', 'text2...']}
+        isOpen={this.state.lightboxIsOpen}
+        onClickPrev={this.gotoPrevious}
+        onClickNext={this.gotoNext}
+        onClose={this.closeLightbox}
+      />
+    );
+  }
+}
+```
 
 ## Demo & Examples
 
-Live demo: [jossmac.github.io/react-images](http://jossmac.github.io/react-images/)
+Live demo: [acamposruiz.github.io/react-images-texts-videos](http://acamposruiz.github.io/react-images-texts-videos/)
 
 To build the examples locally, run:
 
@@ -108,7 +129,7 @@ const LIGHTBOX_IMAGE_SET = [
 
 ```
 
-Note that the caption is an entirely optional property, as can be seen in the first gallery on the [example page](http://jossmac.github.io/react-images/). The first image has a single line caption, the second demonstrates multiline, and the remaining images are without captions, entirely.
+Note that the caption is an entirely optional property, as can be seen in the first gallery on the [example page](http://acamposruiz.github.io/react-images-texts-videos/). The first image has a single line caption, the second demonstrates multiline, and the remaining images are without captions, entirely.
 
 ## Options
 

@@ -8,7 +8,7 @@ body {
   padding: 0;
 }
 a {
-  color: #00D7FF;
+  color: #FF9800;
   text-decoration: none;
 }
 a:hover {
@@ -116,7 +116,7 @@ h6,
   font-weight: 300;
 }
 .page-subheader {
-  background-color: #ebfcff;
+  background-color: #fff7eb;
   border-radius: 4px;
   padding: 20px;
 }
@@ -124,13 +124,13 @@ h6,
   float: right;
 }
 .page-subheader__link {
-  border-bottom: 1px solid rgba(0, 215, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 152, 0, 0.3);
   outline: none;
   text-decoration: none;
 }
 .page-subheader__link:hover,
 .page-subheader__link:focus {
-  border-bottom-color: #00D7FF;
+  border-bottom-color: #FF9800;
   outline: none;
   text-decoration: none;
 }
