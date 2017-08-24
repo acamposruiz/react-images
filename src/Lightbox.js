@@ -263,7 +263,7 @@ class Lightbox extends Component {
 
             return (
 				<article className={css(classes.figure)}>
-					<p> {text} </p>
+					<p className={css(classes.text_content)}> {text} </p>
 				</article>
             );
 
@@ -346,6 +346,11 @@ const classes = StyleSheet.create({
 	},
 	figure: {
 		margin: 0, // remove browser default
+	},
+    text_content: {
+		'font-size': '20px',
+		padding: '70px',
+		color: 'grey',
 	},
 	image: {
 		display: 'block', // removes browser default gutter

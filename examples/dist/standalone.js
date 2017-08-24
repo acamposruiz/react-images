@@ -3178,7 +3178,7 @@ var Lightbox = (function (_Component) {
 					{ className: (0, _aphroditeNoImportant.css)(classes.figure) },
 					_react2['default'].createElement(
 						'p',
-						null,
+						{ className: (0, _aphroditeNoImportant.css)(classes.text_content) },
 						' ',
 						text,
 						' '
@@ -3271,6 +3271,11 @@ var classes = _aphroditeNoImportant.StyleSheet.create({
 	figure: {
 		margin: 0 },
 	// remove browser default
+	text_content: {
+		'font-size': '20px',
+		padding: '70px',
+		color: 'grey'
+	},
 	image: {
 		display: 'block', // removes browser default gutter
 		height: 'auto',
