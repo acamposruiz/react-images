@@ -26,6 +26,11 @@ hr {
   max-width: 940px;
   padding: 0 20px;
 }
+.text_content {
+  font-size: 20px;
+  padding: 70px;
+  color: grey;
+}
 .left-col {
   display: none;
   float: left;
