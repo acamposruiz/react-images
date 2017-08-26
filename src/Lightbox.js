@@ -267,6 +267,19 @@ class Lightbox extends Component {
 				</article>
             );
 
+		} else {
+            const videos = items.items;
+            const videoId = videos[currentItem];
+
+            var width = Math.min(window.innerWidth - window.innerWidth/5, 800);
+
+            return (
+				<div key={videoId} id={videoId} className="video-item">
+
+					<iframe style={{border:'none'}} id={videoId} type="text/html" width={width} height={(3*width)/4}
+							src={`http://www.youtube.com/embed/${videoId}?autoplay=1&origin=http://antoniocamposruiz.com`}/>
+				</div>
+            );
 		}
 
 

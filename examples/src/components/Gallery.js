@@ -109,6 +109,31 @@ class Gallery extends Component {
                     {gallery}
 				</div>
             );
+		} else {
+            const { videos } = this.props;
+
+            if (!videos) return;
+
+            const gallery = videos.map((videoId, i) => {
+            	const videoThumbnail = `https://img.youtube.com/vi/${videoId}/0.jpg`;
+                return (
+					<a
+						className={css(classes.video_thumbnail)}
+						key={i}
+						onClick={(e) => this.openLightbox(i, e)}
+					>
+						<img src={videoThumbnail} className={css(classes.source_video)} />
+						<i className="material-icons">play_circle_outline</i>
+					</a>
+                );
+            });
+
+            return (
+				<div className={css(classes.gallery)}>
+                    {gallery}
+				</div>
+            );
+
 		}
 	}
 	render () {
@@ -174,6 +199,24 @@ const classes = StyleSheet.create({
 	},
 
 	// anchor
+    video_thumbnail: {
+		width:'50%',
+        height: '258px',
+		boxSizing: 'border-box',
+		display: 'block',
+		float: 'left',
+		lineHeight: 0,
+		paddingRight: gutter.small,
+		paddingBottom: gutter.small,
+		overflow: 'hidden',
+
+		'@media (min-width: 500px)': {
+			paddingRight: gutter.large,
+			paddingBottom: gutter.large,
+		},
+	},
+
+	// anchor
     text_thumbail: {
         cursor: 'pointer',
 		height: '200px',
@@ -213,6 +256,14 @@ const classes = StyleSheet.create({
 		display: 'block',
 		height: 'auto',
 		maxWidth: '100%',
+		width: 'auto',
+	},
+
+
+    source_video: {
+		border: 0,
+		height: 'auto',
+		maxWidth: '90%',
 		width: 'auto',
 	},
 });

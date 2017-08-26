@@ -3184,6 +3184,18 @@ var Lightbox = (function (_Component) {
 						' '
 					)
 				);
+			} else {
+				var videos = items.items;
+				var videoId = videos[currentItem];
+
+				var width = Math.min(window.innerWidth - window.innerWidth / 5, 800);
+
+				return _react2['default'].createElement(
+					'div',
+					{ key: videoId, id: videoId, className: 'video-item' },
+					_react2['default'].createElement('iframe', { style: { border: 'none' }, id: videoId, type: 'text/html', width: width, height: 3 * width / 4,
+						src: 'http://www.youtube.com/embed/' + videoId + '?autoplay=1&origin=http://antoniocamposruiz.com' })
+				);
 			}
 		}
 	}, {

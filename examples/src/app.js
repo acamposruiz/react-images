@@ -156,6 +156,9 @@ render(
 		<Gallery texts={Array(1,1,1,1).map(item => {
             return loremIpsum({count: 10, units: 'sentences'});
         })} theme={theme} />
+
+		<h3>Themed Videos</h3>
+		<Gallery videos={['jlNvOWDfMYo', 'iRXJXaLV0n4', 'geqVuYmo8Y0', 'tntOCGkgt98']} theme={theme} />
 	</div>,
 	document.getElementById('example')
 );

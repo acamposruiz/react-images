@@ -80,6 +80,17 @@
   onClickNext={this.gotoNextLightboxText}
   onClose={this.closeLightbox}
 /&gt;</code></pre>
+							<p>3. Example with videos:</p>
+							<pre><code>&lt;Lightbox
+  videos={[
+    'IdYoutubeVideo',
+    'IdYoutubeVideo'
+  ]}
+  isOpen={this.state.lightboxIsOpen}
+  onClickPrev={this.gotoPrevLightboxText}
+  onClickNext={this.gotoNextLightboxText}
+  onClose={this.closeLightbox}
+/&gt;</code></pre>
 
 						</section>
 
@@ -131,6 +142,12 @@
 											<td align="left">array</td>
 											<td align="left">undefined</td>
 											<td align="left">An array of texts</td>
+										</tr>
+										<tr>
+											<td align="left"><a href="#images">videos</a></td>
+											<td align="left">array</td>
+											<td align="left">undefined</td>
+											<td align="left">An array of ids of videos on Youtube</td>
 										</tr>
 										<tr>
 											<td align="left">imageCountSeparator</td>
