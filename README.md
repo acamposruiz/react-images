@@ -54,6 +54,28 @@ export default class Sample extends React.Component {
 }
 ```
 
+or wit videos (Youtube videos only):
+
+```jsx
+import React from 'react';
+import Lightbox from 'react-images-texts-videos';
+
+export default class Sample extends React.Component {
+  ...
+  render() {
+    return (
+      <Lightbox
+        videos={['videoId1', 'videoId2']}
+        isOpen={this.state.lightboxIsOpen}
+        onClickPrev={this.gotoPrevious}
+        onClickNext={this.gotoNext}
+        onClose={this.closeLightbox}
+      />
+    );
+  }
+}
+```
+
 ## Demo & Examples
 
 Live demo: [acamposruiz.github.io/react-images-texts-videos](http://acamposruiz.github.io/react-images-texts-videos/)
@@ -142,6 +164,7 @@ currentImage  | number  | 0 | The index of the image to display initially
 customControls | array | undefined | An array of elements to display as custom controls on the top of lightbox
 images  | array | undefined | An array of objects containing valid src and srcset values of img element
 texts  | array | undefined | An array of texts
+videos  | array | undefined | An array of Ids of Youtube videos
 imageCountSeparator  | String  | ' of ' | Customize separator in the image count
 isOpen  | bool  | false | Whether or not the lightbox is displayed
 leftArrowTitle | string | ' Previous (Left arrow key) ' | Customize of left arrow title
