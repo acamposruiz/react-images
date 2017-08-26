@@ -277,7 +277,7 @@ class Lightbox extends Component {
 				<div key={videoId} id={videoId} className="video-item">
 
 					<iframe style={{border:'none'}} id={videoId} type="text/html" width={width} height={(3*width)/4}
-							src={`http://www.youtube.com/embed/${videoId}?autoplay=1&origin=http://antoniocamposruiz.com`}/>
+							src={`//www.youtube.com/embed/${videoId}?autoplay=1&origin=http://antoniocamposruiz.com`}/>
 				</div>
             );
 		}
