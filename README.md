@@ -32,7 +32,7 @@ export default class Sample extends React.Component {
 }
 ```
 
-or wit texts:
+or with texts:
 
 ```jsx
 import React from 'react';
@@ -54,7 +54,7 @@ export default class Sample extends React.Component {
 }
 ```
 
-or wit videos (Youtube videos only):
+or with videos (Youtube videos only):
 
 ```jsx
 import React from 'react';
