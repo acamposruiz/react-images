@@ -21,7 +21,7 @@ export default class Sample extends React.Component {
   render() {
     return (
       <Lightbox
-        images={[{ src: 'http://example.com/img1.jpg' }, { src: 'http://example.com/img2.jpg' }]}
+        items={{type:'images', items: [{ src: 'http://example.com/img1.jpg' }, { src: 'http://example.com/img2.jpg' }]}}
         isOpen={this.state.lightboxIsOpen}
         onClickPrev={this.gotoPrevious}
         onClickNext={this.gotoNext}
@@ -43,7 +43,7 @@ export default class Sample extends React.Component {
   render() {
     return (
       <Lightbox
-        texts={['text1...', 'text2...']}
+        items={{type:'texts', items: ['text1...', 'text2...']}}
         isOpen={this.state.lightboxIsOpen}
         onClickPrev={this.gotoPrevious}
         onClickNext={this.gotoNext}
@@ -65,7 +65,7 @@ export default class Sample extends React.Component {
   render() {
     return (
       <Lightbox
-        videos={['videoId1', 'videoId2']}
+        items={{type:'videos', items: ['videoId1', 'videoId2']}}
         isOpen={this.state.lightboxIsOpen}
         onClickPrev={this.gotoPrevious}
         onClickNext={this.gotoNext}
@@ -160,11 +160,9 @@ Property	|	Type		|	Default		|	Description
 backdropClosesModal	|	bool	|	false	|	Allow users to exit the lightbox by clicking the backdrop
 closeButtonTitle | string | ' Close (Esc) ' | Customize close esc title
 enableKeyboardInput | bool  | true  | Supports keyboard input - <code>esc</code>, <code>arrow left</code>, and <code>arrow right</code>
-currentImage  | number  | 0 | The index of the image to display initially
+currentItem  | number  | 0 | The index of the item to display initially
 customControls | array | undefined | An array of elements to display as custom controls on the top of lightbox
-images  | array | undefined | An array of objects containing valid src and srcset values of img element
-texts  | array | undefined | An array of texts
-videos  | array | undefined | An array of Ids of Youtube videos
+items  | array | undefined | An array of objects containing two values, the type of element (images, texts or videos), and an array with the items
 imageCountSeparator  | String  | ' of ' | Customize separator in the image count
 isOpen  | bool  | false | Whether or not the lightbox is displayed
 leftArrowTitle | string | ' Previous (Left arrow key) ' | Customize of left arrow title
