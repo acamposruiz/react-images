@@ -8,7 +8,7 @@ body {
   padding: 0;
 }
 a {
-  color: #00D7FF;
+  color: #FF9800;
   text-decoration: none;
 }
 a:hover {
@@ -25,6 +25,11 @@ hr {
   margin-right: auto;
   max-width: 940px;
   padding: 0 20px;
+}
+.text_content {
+  font-size: 20px;
+  padding: 70px;
+  color: grey;
 }
 .left-col {
   display: none;
@@ -116,7 +121,7 @@ h6,
   font-weight: 300;
 }
 .page-subheader {
-  background-color: #ebfcff;
+  background-color: #fff7eb;
   border-radius: 4px;
   padding: 20px;
 }
@@ -124,13 +129,13 @@ h6,
   float: right;
 }
 .page-subheader__link {
-  border-bottom: 1px solid rgba(0, 215, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 152, 0, 0.3);
   outline: none;
   text-decoration: none;
 }
 .page-subheader__link:hover,
 .page-subheader__link:focus {
-  border-bottom-color: #00D7FF;
+  border-bottom-color: #FF9800;
   outline: none;
   text-decoration: none;
 }
@@ -261,4 +266,44 @@ pre {
   .page-footer__copyright--small {
     display: none;
   }
+}
+/*Ico fonts*/
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialicons/v29/2fcrYFNaTjcS6g4U3t-Y5UEw0lE80llgEseQY3FEmqw.woff2) format('woff2');
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+.material-icons {
+  cursor: pointer;
+  opacity: .75;
+  font-size: 15em;
+  top: 50%;
+  position: sticky;
+  /* position: absolute; */
+  left: 0;
+  right: 0;
+  transform: translate(16%, -102%);
 }
