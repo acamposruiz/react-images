@@ -1,6 +1,6 @@
 {
   "name": "react-images-texts-videos",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A simple, responsive lightbox component for displaying an array of images, texts and videos with React.js",
   "main": "lib/Lightbox.js",
   "author": "Joss Mackison, Antonio Campos",
