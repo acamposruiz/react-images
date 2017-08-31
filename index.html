@@ -60,10 +60,12 @@
 							<pre>npm install react-images-texts-videos --save</pre>
 							<p>2. Example with images:</p>
 							<pre><code>&lt;Lightbox
-  images={[
+  items={{
+    type:'images',
+    content: [
     { src: '../images/photo-1.jpg' },
     { src: '../images/photo-2.jpg' }
-  ]}
+  ]}}
   isOpen={this.state.lightboxIsOpen}
   onClickPrev={this.gotoPrevLightboxImage}
   onClickNext={this.gotoNextLightboxImage}
@@ -71,10 +73,12 @@
 /&gt;</code></pre>
 							<p>3. Example with texts:</p>
 							<pre><code>&lt;Lightbox
-  texts={[
+  items={{
+    type:'texts',
+    content: [
     'Text1...',
     'Text2...'
-  ]}
+  ]}}
   isOpen={this.state.lightboxIsOpen}
   onClickPrev={this.gotoPrevLightboxText}
   onClickNext={this.gotoNextLightboxText}
@@ -82,10 +86,7 @@
 /&gt;</code></pre>
 							<p>3. Example with videos:</p>
 							<pre><code>&lt;Lightbox
-  videos={[
-    'IdYoutubeVideo',
-    'IdYoutubeVideo'
-  ]}
+  items={{type:'videos', items: ['videoId1', 'videoId2']}}
   isOpen={this.state.lightboxIsOpen}
   onClickPrev={this.gotoPrevLightboxText}
   onClickNext={this.gotoNextLightboxText}
@@ -132,22 +133,10 @@
 											<td align="left">Supports keyboard input - <code>esc</code>, <code>arrow left</code>, and <code>arrow right</code></td>
 										</tr>
 										<tr>
-											<td align="left"><a href="#images">images</a></td>
-											<td align="left">array</td>
+											<td align="left"><a href="#items">items</a></td>
+											<td align="left">object</td>
 											<td align="left">undefined</td>
-											<td align="left">An array of objects containing valid src and srcset values of img element</td>
-										</tr>
-										<tr>
-											<td align="left"><a href="#images">texts</a></td>
-											<td align="left">array</td>
-											<td align="left">undefined</td>
-											<td align="left">An array of texts</td>
-										</tr>
-										<tr>
-											<td align="left"><a href="#images">videos</a></td>
-											<td align="left">array</td>
-											<td align="left">undefined</td>
-											<td align="left">An array of ids of videos on Youtube</td>
+											<td align="left">A object containing two values, the type of element (images, texts or videos), and an array with the items</td>
 										</tr>
 										<tr>
 											<td align="left">imageCountSeparator</td>
@@ -230,8 +219,35 @@
 									</tbody>
 								</table>
 							</div>
-							<h2>Images</h2>
-							<div class="options-table-container" id="images">
+							<h2>Items</h2>
+							<div class="options-table-container" id="items">
+								<table class="options-table">
+									<thead>
+										<tr>
+											<th align="left">Property</th>
+											<th align="left">Type</th>
+											<th align="left">Default</th>
+											<th align="left">Description</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td align="left">type</td>
+											<td align="left">string</td>
+											<td align="left">undefined</td>
+											<td align="left">Required. It can be one of three options: <a href="#images-items">images</a>, <a href="#texts-items">texts</a> or <a href="#videos-items">videos</a></td>
+										</tr>
+										<tr>
+											<td align="left">content</td>
+											<td align="left">array</td>
+											<td align="left">undefined</td>
+											<td align="left">List of the items</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<h2 id="images-items">Images items format</h2>
+							<div class="options-table-container">
 								<table class="options-table">
 									<thead>
 										<tr>
@@ -269,6 +285,14 @@
 									</tbody>
 								</table>
 							</div>
+                            <h2 id="texts-items">Text items format</h2>
+                            <div class="options-table-container" id="texts-items">
+                                <p>Array of strings</p>
+                            </div>
+                            <h2  id="videos-items">Videos items format</h2>
+                            <div class="options-table-container" id="texts-items">
+                                <p>Array of strings that fit any youtube video id</p>
+                            </div>
 						</section>
 
 						<section id="license" class="section-license">
