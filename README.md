@@ -162,7 +162,7 @@ closeButtonTitle | string | ' Close (Esc) ' | Customize close esc title
 enableKeyboardInput | bool  | true  | Supports keyboard input - <code>esc</code>, <code>arrow left</code>, and <code>arrow right</code>
 currentItem  | number  | 0 | The index of the item to display initially
 customControls | array | undefined | An array of elements to display as custom controls on the top of lightbox
-items  | array | undefined | An array of objects containing two values, the type of element (images, texts or videos), and an array with the items
+items  | object | undefined | A object containing two values, the type of element (images, texts or videos), and an array with the items
 imageCountSeparator  | String  | ' of ' | Customize separator in the image count
 isOpen  | bool  | false | Whether or not the lightbox is displayed
 leftArrowTitle | string | ' Previous (Left arrow key) ' | Customize of left arrow title
